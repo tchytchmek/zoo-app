@@ -546,7 +546,7 @@ void updateAnimal(Animal animals[], int count) {
         cin.clear();
         cin.ignore(10000, '\n');
     }
-    cin.ignore(10000, '\n'); // Очистити буфер після cin
+    cin.ignore(10000, '\n'); // очистка буфера
 
     Animal* animal = findAnimalById(animals, count, id);
     if (!animal) {
@@ -560,21 +560,55 @@ void updateAnimal(Animal animals[], int count) {
     cout << "Age: " << animal->age << "\n";
     cout << "Health: " << animal->healthStatus << "\n\n";
 
-    cout << "Enter new age (current " << animal->age << "): ";
-    while (!(cin >> animal->age)) {
-        cout << "Invalid input. Please enter a number: ";
-        cin.clear();
-        cin.ignore(10000, '\n');
-    }
-    cin.ignore(10000, '\n'); // Очистити буфер після cin
+    // ------------------------------
+    //   ВВЕДЕННЯ НОВОГО ВІКУ
+    // ------------------------------
+    cout << "Enter new age (current " << animal->age << ") or press ENTER to keep old: ";
 
-    cout << "Enter new health status (current: " << animal->healthStatus << "): ";
-    getline(cin, animal->healthStatus);
-    animal->healthStatus = trim(animal->healthStatus);
+    string ageInput;
+    getline(cin, ageInput);
+
+    if (!ageInput.empty()) {
+        // Перевірка, що це число
+        bool valid = true;
+        for (char c : ageInput)
+            if (!isdigit(c) && c != '-')
+                valid = false;
+
+        if (!valid) {
+            cout << "Invalid age format. Keeping previous value.\n";
+        }
+        else {
+            int newAge = stoi(ageInput);
+            if (newAge < 0) {
+                cout << "Error: Age cannot be negative. Keeping previous value.\n";
+            }
+            else {
+                animal->age = newAge;
+            }
+        }
+    }
+    // Якщо empty → залишаємо старе значення
+
+    // ------------------------------
+    //   ОНОВЛЕННЯ СТАНУ ЗДОРОВʼЯ
+    // ------------------------------
+    cout << "Enter new health status (current: " << animal->healthStatus
+        << ") or press ENTER to keep old: ";
+
+    string newHealth;
+    getline(cin, newHealth);
+
+    if (!newHealth.empty()) {
+        animal->healthStatus = trim(newHealth);
+    }
+    // Якщо empty → залишаємо попередній healthStatus
 
     saveAnimals(animals, count);
+
     cout << "\nAnimal information updated successfully!\n";
 }
+
 
 /**
  * @brief Функція-запускач для Модуля 3.

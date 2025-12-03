@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\GItProj\\Zoo-System 2\\",
+  "WorkspaceRootPath": "C:\\Users\\Legion\\Desktop\\zoo-app\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{549896D2-35CD-496C-8FF1-B33D1A47F45E}|Zoo-System 2\\Zoo-System 2.vcxproj|D:\\GItProj\\Zoo-System 2\\Zoo-System 2\\Zoo-System 2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{549896D2-35CD-496C-8FF1-B33D1A47F45E}|Zoo-System 2\\Zoo-System 2.vcxproj|C:\\Users\\Legion\\Desktop\\zoo-app\\Zoo-System 2\\Zoo-System 2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{549896D2-35CD-496C-8FF1-B33D1A47F45E}|Zoo-System 2\\Zoo-System 2.vcxproj|solutionrelative:Zoo-System 2\\Zoo-System 2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -24,11 +24,17 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Zoo-System 2.cpp",
-              "DocumentMoniker": "D:\\GItProj\\Zoo-System 2\\Zoo-System 2\\Zoo-System 2.cpp",
+              "DocumentMoniker": "C:\\Users\\Legion\\Desktop\\zoo-app\\Zoo-System 2\\Zoo-System 2.cpp",
               "RelativeDocumentMoniker": "Zoo-System 2\\Zoo-System 2.cpp",
+<<<<<<< HEAD
               "ToolTip": "D:\\GItProj\\Zoo-System 2\\Zoo-System 2\\Zoo-System 2.cpp",
               "RelativeToolTip": "Zoo-System 2\\Zoo-System 2.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAPAAAAAuAAAAAAAAAA==",
+=======
+              "ToolTip": "C:\\Users\\Legion\\Desktop\\zoo-app\\Zoo-System 2\\Zoo-System 2.cpp*",
+              "RelativeToolTip": "Zoo-System 2\\Zoo-System 2.cpp*",
+              "ViewState": "AgIAABgCAAAAAAAAAAA0wBkCAAAwAAAAAAAAAA==",
+>>>>>>> f351d48dfb86a36dd9c19aceaa02693ff9eadf05
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-12-03T12:51:00.668Z",
               "EditorCaption": ""
