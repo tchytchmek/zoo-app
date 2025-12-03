@@ -1,0 +1,4 @@
+# Format: ID:Name:Species:Age:HealthStatus
+52:Kolbo:Dragon:9:Healthy
+1312:Valyanok:Wolf:3:Injured
+5445:Simba:Monkey:32:Sick

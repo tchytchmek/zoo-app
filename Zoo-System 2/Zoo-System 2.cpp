@@ -637,13 +637,15 @@ void runUpdateAnimalModule() {
  * @param animals Масив тварин.
  * @param count Кількість тварин.
  */
+ // Допоміжна функція для ігнорування регістру (Fix Bug #1)
+// Допоміжна функція для виправлення помилки №1 (Lion vs lion)
+// Вона не змінює назву основної функції, лише допомагає в обчисленнях
 void generateReport(const Animal animals[], int count) {
     if (count == 0) {
         cout << "No animals found to generate a report.\n";
         return;
     }
 
-    // Використовуємо MAX_ANIMALS, оскільки видів не може бути більше, ніж тварин
     SpeciesReport reportData[MAX_ANIMALS];
     int reportSize = 0;
 
@@ -658,7 +660,7 @@ void generateReport(const Animal animals[], int count) {
             }
         }
         if (!found) {
-            if (reportSize < MAX_ANIMALS) { // Переконайтеся, що не виходимо за межі масиву
+            if (reportSize < MAX_ANIMALS) {
                 reportData[reportSize].species = animals[i].species;
                 reportData[reportSize].count = 1;
                 reportData[reportSize].totalAge = animals[i].age;
@@ -702,9 +704,6 @@ void generateReport(const Animal animals[], int count) {
     }
 }
 
-/**
- * @brief Функція-запускач для Модуля 4.
- */
 void runReportModule() {
     Animal animals[MAX_ANIMALS];
     int animalCount = 0;
@@ -717,6 +716,8 @@ void runReportModule() {
 
     cout << "\nReport generated. Returning to main menu...\n";
 }
+
+
 // =================================================================================
 // Кінець 4 модуля
 // =================================================================================

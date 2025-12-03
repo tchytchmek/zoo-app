@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\git_proj\\Zoo2\\zoo-app\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{549896D2-35CD-496C-8FF1-B33D1A47F45E}|Zoo-System 2\\Zoo-System 2.vcxproj|E:\\git_proj\\Zoo2\\zoo-app\\Zoo-System 2\\Zoo-System 2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{549896D2-35CD-496C-8FF1-B33D1A47F45E}|Zoo-System 2\\Zoo-System 2.vcxproj|solutionrelative:Zoo-System 2\\Zoo-System 2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Zoo-System 2.cpp",
+              "DocumentMoniker": "E:\\git_proj\\Zoo2\\zoo-app\\Zoo-System 2\\Zoo-System 2.cpp",
+              "RelativeDocumentMoniker": "Zoo-System 2\\Zoo-System 2.cpp",
+              "ToolTip": "E:\\git_proj\\Zoo2\\zoo-app\\Zoo-System 2\\Zoo-System 2.cpp",
+              "RelativeToolTip": "Zoo-System 2\\Zoo-System 2.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD8CAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-03T16:30:30.855Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
