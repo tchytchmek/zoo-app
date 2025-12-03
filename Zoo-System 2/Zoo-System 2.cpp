@@ -456,17 +456,43 @@ void addNewAnimal(Animal animals[], int& count) {
         return;
     }
 
-    cout << "Enter animal name: ";
-    getline(cin, a.name);
+    // --- ВИПРАВЛЕННЯ ПОМИЛКИ №2 (Порожнє ім'я) ---
+    // Використовуємо цикл do-while, щоб змусити користувача ввести ім'я
+    do {
+        cout << "Enter animal name: ";
+        getline(cin, a.name);
+        a.name = trim(a.name); // Видаляємо зайві пробіли (функція з глобального коду)
+
+        if (a.name.empty()) {
+            cout << "Error: Name cannot be empty. Please enter a valid name.\n";
+        }
+    } while (a.name.empty());
+
+
     cout << "Enter species (e.g., Lion, Tiger, Elephant): ";
     getline(cin, a.species);
-    cout << "Enter age (in years): ";
-    while (!(cin >> a.age)) {
-        cout << "Invalid input. Please enter a number: ";
-        cin.clear();
-        cin.ignore(10000, '\n');
+
+
+    // --- ВИПРАВЛЕННЯ ПОМИЛКИ №1 (Від'ємний вік) ---
+    // Перевіряємо не тільки чи це число, а й чи воно >= 0
+    while (true) {
+        cout << "Enter age (in years): ";
+        if (cin >> a.age) {
+            if (a.age < 0) {
+                cout << "Error: Age cannot be negative (e.g. -10). Please enter a positive number.\n";
+            }
+            else {
+                break; // Введено коректне невід'ємне число
+            }
+        }
+        else {
+            cout << "Invalid input. Please enter a number: ";
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
     }
     cin.ignore(10000, '\n'); // Очистити буфер після cin
+
 
     cout << "Enter health status (e.g., Healthy, Sick, Injured): ";
     getline(cin, a.healthStatus);

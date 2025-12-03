@@ -1,4 +1,4 @@
 ﻿  Zoo-System 2.cpp
-C:\Users\Legion\Desktop\zoo-app\Zoo-System 2\Zoo-System 2.cpp(113,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Legion\Desktop\zoo-app\Zoo-System 2\Zoo-System 2.cpp(114,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Zoo-System 2.vcxproj -> C:\Users\Legion\Desktop\zoo-app\x64\Debug\Zoo-System 2.exe
+D:\Lab 6\zoo-app\Zoo-System 2\Zoo-System 2.cpp(113,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\Lab 6\zoo-app\Zoo-System 2\Zoo-System 2.cpp(114,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Zoo-System 2.vcxproj -> D:\Lab 6\zoo-app\x64\Debug\Zoo-System 2.exe

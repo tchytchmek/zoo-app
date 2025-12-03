@@ -2,3 +2,4 @@
 52:Kolbo:Dragon:9:health
 1312:Valyanok:Wolf:3:Injured
 5445:Simba:Monkey:32:Sick
+1:Badon:Monkey:33:healthy
