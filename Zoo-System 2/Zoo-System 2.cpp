@@ -533,7 +533,7 @@ void runAddAnimalModule() {
  * @param count Кількість тварин.
  */
 void updateAnimal(Animal animals[], int count) {
-    cout << "\n=== Update Animal Information ===\n";
+    cout << "\nUpdate Animal Information\n";
     if (count == 0) {
         cout << "No animals found to update.\n";
         return;
