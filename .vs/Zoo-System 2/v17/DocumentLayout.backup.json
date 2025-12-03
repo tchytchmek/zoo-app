@@ -14,24 +14,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Zoo-System 2.cpp",
               "DocumentMoniker": "D:\\GItProj\\Zoo-System 2\\Zoo-System 2\\Zoo-System 2.cpp",
               "RelativeDocumentMoniker": "Zoo-System 2\\Zoo-System 2.cpp",
-              "ToolTip": "D:\\GItProj\\Zoo-System 2\\Zoo-System 2\\Zoo-System 2.cpp*",
-              "RelativeToolTip": "Zoo-System 2\\Zoo-System 2.cpp*",
-              "ViewState": "AgIAAOQAAAAAAAAAAAAvwOwAAAALAAAAAAAAAA==",
+              "ToolTip": "D:\\GItProj\\Zoo-System 2\\Zoo-System 2\\Zoo-System 2.cpp",
+              "RelativeToolTip": "Zoo-System 2\\Zoo-System 2.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAPAAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-12-03T12:51:00.668Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             }
           ]
         }
