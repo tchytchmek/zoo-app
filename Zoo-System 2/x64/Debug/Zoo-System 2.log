@@ -1,0 +1,4 @@
+﻿  Zoo-System 2.cpp
+D:\GItProj\Zoo-System 2\Zoo-System 2\Zoo-System 2.cpp(113,16): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+D:\GItProj\Zoo-System 2\Zoo-System 2\Zoo-System 2.cpp(114,16): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  Zoo-System 2.vcxproj -> D:\GItProj\Zoo-System 2\x64\Debug\Zoo-System 2.exe

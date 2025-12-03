@@ -82,22 +82,22 @@ static inline string trim(const string& s) {
 // =================================================================================
 // ПОЧАТОК БЛОКУ УЧАСНИКА 1
 // МОДУЛЬ 1: АВТОРИЗАЦІЯ КОРИСТУВАЧА
-// (Функції: loadUsersFromFile, saveUsersToFile, createDefaultUsersFile,
-// usernameExists, authenticate, registerUser, runUserModule)
 // =================================================================================
 
-/*
-Модуль “Авторизація користувача”: Забезпечує вхід до системи,
-перевірку логіна і пароля користувача, визначає його роль (інспектор,
-ветеринар, адміністратор, директор) і надає відповідний рівень
-доступу. Також дозволяє створювати нових користувачів.
-*/
+// Допоміжна функція для безпечного зчитування
+string safeInput() {
+    string s;
+    getline(cin, s);
+    return trim(s);
+}
 
-/**
- * @brief Завантажує список користувачів з файлу USERS_FILE у масив.
- * @param users Масив для заповнення користувачами.
- * @param count Посилання на змінну, куди буде записано кількість завантажених користувачів.
- */
+// Заборона використання символу ':'
+bool hasIllegalChar(const string& s) {
+    return s.find(':') != string::npos;
+}
+
+
+// ---------- LOAD USERS ----------
 void loadUsersFromFile(User users[], int& count) {
     count = 0;
     ifstream fin(USERS_FILE);
@@ -105,159 +105,145 @@ void loadUsersFromFile(User users[], int& count) {
 
     string line;
     while (getline(fin, line)) {
-        if (count >= MAX_USERS) {
-            cerr << "Warning: Max user limit reached. Some users not loaded.\n";
-            break;
-        }
+        if (count >= MAX_USERS) break;
+
         line = trim(line);
         if (line.empty() || line[0] == '#') continue;
 
-        istringstream iss(line);
-        string part;
-        string parts[3];
-        int partCount = 0;
+        int p1 = line.find(':');
+        int p2 = line.find(':', p1 + 1);
 
-        while (partCount < 3 && getline(iss, part, ':')) {
-            parts[partCount++] = trim(part);
+        if (p1 == -1 || p2 == -1) {
+            cerr << "Skipping malformed user entry: " << line << "\n";
+            continue;
         }
 
-        if (partCount == 3) {
-            users[count].username = parts[0];
-            users[count].password = parts[1];
-            users[count].role = parts[2];
-            count++;
+        string username = trim(line.substr(0, p1));
+        string password = trim(line.substr(p1 + 1, p2 - p1 - 1));
+        string role = trim(line.substr(p2 + 1));
+
+        if (username.empty() || password.empty() || role.empty()) {
+            cerr << "Skipping incomplete user entry.\n";
+            continue;
         }
+
+        users[count] = { username, password, role };
+        count++;
     }
     fin.close();
 }
 
-/**
- * @brief Зберігає поточний список користувачів з масиву у файл.
- * @param path Шлях до файлу (зазвичай USERS_FILE).
- * @param users Масив користувачів для збереження.
- * @param count Кількість користувачів у масиві.
- */
+
+// ---------- SAVE USERS ----------
 void saveUsersToFile(const string& path, const User users[], int count) {
     ofstream fout(path);
     if (!fout.is_open()) {
         cerr << "Error: cannot save user file.\n";
         return;
     }
+
     fout << "# Format: username:password:role\n";
-    for (int i = 0; i < count; ++i) {
-        fout << users[i].username << ":" << users[i].password << ":" << users[i].role << "\n";
+    for (int i = 0; i < count; i++) {
+        fout << users[i].username << ":" << users[i].password
+            << ":" << users[i].role << "\n";
     }
-    fout.close();
 }
 
-/**
- * @brief Створює файл users.txt за замовчуванням, якщо він не існує.
- * @param path Шлях до файлу (зазвичай USERS_FILE).
- */
+
+// ---------- DEFAULT FILE ----------
 void createDefaultUsersFile(const string& path) {
     ofstream fout(path);
-    if (!fout.is_open()) {
-        cerr << "Error: cannot create user file: " << path << "\n";
-        return;
-    }
     fout << "# Format: username:password:role\n";
     fout << "inspector1:inspectorpass:inspector\n";
     fout << "vet1:vetpass:veterinarian\n";
     fout << "admin:adminpass:administrator\n";
     fout << "director:directorpass:director\n";
-    fout.close();
-    cout << "Created default user file: " << path << "\n";
+    cout << "Created default user file.\n";
 }
 
-/**
- * @brief Перевіряє, чи існує користувач з таким іменем.
- * @param users Масив користувачів.
- * @param count Кількість користувачів.
- * @param username Ім'я, яке потрібно перевірити.
- * @return true, якщо ім'я вже зайняте, інакше false.
- */
+
+// ---------- CHECK USERNAME ----------
 bool usernameExists(const User users[], int count, const string& username) {
-    for (int i = 0; i < count; ++i) {
+    for (int i = 0; i < count; i++) {
         if (users[i].username == username) return true;
     }
     return false;
 }
 
-/**
- * @brief Перевіряє логін та пароль користувача.
- * @param users Масив користувачів.
- * @param count Кількість користувачів.
- * @param login Логін, що перевіряється.
- * @param password Пароль, що перевіряється.
- * @return Вказівник на об'єкт User у разі успіху, або nullptr у разі невдачі.
- */
+
+// ---------- AUTH ----------
 const User* authenticate(const User users[], int count, const string& login, const string& password) {
-    for (int i = 0; i < count; ++i) {
-        if (users[i].username == login && users[i].password == password) {
+    for (int i = 0; i < count; i++) {
+        if (users[i].username == login && users[i].password == password)
             return &users[i];
-        }
     }
     return nullptr;
 }
 
-/**
- * @brief Реєструє нового користувача в системі.
- * (Викликається лише адміністратором або директором).
- * @param users Масив користувачів.
- * @param count Посилання на лічильник користувачів (буде збільшено).
- */
+
+// ---------- REGISTER ----------
 void registerUser(User users[], int& count) {
+
     if (count >= MAX_USERS) {
-        cout << "Error: User limit reached. Cannot register new user.\n";
+        cout << "User limit reached.\n";
         return;
     }
 
-    string username, password, role;
-    cout << "\n=== User Registration (Admin) ===\n";
-    cout << "Enter new username: ";
-    getline(cin, username);
-    username = trim(username);
+    cout << "\n=== Register New User ===\n";
+
+    // username
+    cout << "Enter username: ";
+    string username = safeInput();
 
     if (username.empty()) {
         cout << "Error: Username cannot be empty.\n";
+        return;
+    }
+    if (hasIllegalChar(username)) {
+        cout << "Error: Username cannot contain ':'.\n";
         return;
     }
     if (usernameExists(users, count, username)) {
         cout << "Error: Username already exists.\n";
         return;
     }
+
+    // password
     cout << "Enter password: ";
-    getline(cin, password);
-    password = trim(password);
+    string password = safeInput();
+
     if (password.empty()) {
         cout << "Error: Password cannot be empty.\n";
         return;
     }
-
-    // --- Ось де адмін призначає роль ---
-    cout << "Enter role (inspector / veterinarian / administrator / director): ";
-    getline(cin, role);
-    role = trim(role);
-
-    if (role != "inspector" && role != "veterinarian" && role != "administrator" && role != "director") {
-        cout << "Invalid role. Defaulting to 'inspector'.\n";
-        role = "inspector";
+    if (hasIllegalChar(password)) {
+        cout << "Error: Password cannot contain ':'.\n";
+        return;
     }
-    // --- Кінець призначення ролі ---
 
-    users[count].username = username;
-    users[count].password = password;
-    users[count].role = role;
+    // role selection
+    cout << "Enter role (inspector / veterinarian / administrator / director): ";
+    string role;
+    while (true) {
+        role = safeInput();
+        if (role == "inspector" || role == "veterinarian" ||
+            role == "administrator" || role == "director")
+        {
+            break;
+        }
+        cout << "Invalid role. Please enter again: ";
+    }
+
+    // save
+    users[count] = { username, password, role };
     count++;
 
     saveUsersToFile(USERS_FILE, users, count);
     cout << "User registered successfully!\n";
 }
 
-/**
- * @brief Функція-запускач для Модуля 1.
- * (ОНОВЛЕНО: тепер вимагає вхід для доступу до реєстрації)
- */
+
+// ---------- RUN USER MODULE ----------
 void runUserModule() {
     User users[MAX_USERS];
     int userCount = 0;
@@ -265,65 +251,50 @@ void runUserModule() {
     loadUsersFromFile(users, userCount);
 
     if (userCount == 0) {
-        cout << "User file not found or empty. Creating default file...\n";
+        cout << "No users found. Creating default file...\n";
         createDefaultUsersFile(USERS_FILE);
         loadUsersFromFile(users, userCount);
-        if (userCount == 0) {
-            cerr << "Failed to load users. Exiting module.\n";
-            return;
-        }
     }
 
-    cout << "\n=== Zoo Management System ===\n";
-    cout << "=== Authorization & Registration ===\n\n";
-
-    // --- Крок 1: Вимагаємо вхід для демонстрації модуля ---
-    cout << "--- Module Demo: Please login to proceed ---" << endl;
-    string login, password;
+    cout << "\n=== Login ===\n";
     cout << "Login: ";
-    getline(cin, login);
+    string login = safeInput();
     cout << "Password: ";
-    getline(cin, password);
+    string password = safeInput();
 
-    const User* loggedInUser = authenticate(users, userCount, trim(login), trim(password));
+    const User* current = authenticate(users, userCount, login, password);
 
-    if (loggedInUser == nullptr) {
-        cout << "Invalid login. Returning to main menu.\n";
+    if (!current) {
+        cout << "Invalid login.\n";
         return;
     }
 
-    cout << "\nLogin successful! You are: " << loggedInUser->username
-        << " (Role: " << loggedInUser->role << ")" << endl;
+    cout << "Welcome, " << current->username << " (" << current->role << ")\n";
 
-    // --- Крок 2: Меню на основі ролі ---
+    // role-based menu
     while (true) {
-        cout << "\n--- User Module Menu ---\n";
+        cout << "\n--- User Menu ---\n";
 
-        // *Тільки* адмін (або директор) бачить опцію реєстрації
-        if (loggedInUser->role == "administrator" || loggedInUser->role == "director") {
-            cout << "1. Register New User\n";
+        if (current->role == "administrator" || current->role == "director") {
+            cout << "1. Register new user\n";
         }
-        cout << "2. Exit to Main Menu\n";
-        cout << "Select option: ";
+        cout << "2. Exit\n";
+        cout << "Select: ";
+        string ch = safeInput();
 
-        string choice;
-        getline(cin, choice);
-
-        if (choice == "1" && (loggedInUser->role == "administrator" || loggedInUser->role == "director")) {
-            // Адмін, який увійшов, тепер запускає функцію реєстрації
-            // і сам призначає роль новому користувачу
+        if (ch == "1" && (current->role == "administrator" || current->role == "director")) {
             registerUser(users, userCount);
         }
-        else if (choice == "2") {
+        else if (ch == "2") {
             cout << "Returning to main menu...\n";
             break;
         }
         else {
-            // Сюди потрапить не-адмін, якщо введе "1"
-            cout << "Invalid choice or insufficient permissions. Please try again.\n";
+            cout << "Invalid choice.\n";
         }
     }
 }
+
 // =================================================================================
 // КІНЕЦЬ 1 модуля
 // =================================================================================
